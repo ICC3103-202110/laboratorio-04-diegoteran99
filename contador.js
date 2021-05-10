@@ -3,25 +3,28 @@ function view(counter) {
 }
 
 function update(msg, counter) {
-    if (msg==="-")
+    if (msg==="-") {
         return counter - 1;
-    if (msg==="+")
+    }
+    if (msg==="+") {
         return counter + 1;
-    if (msg==="q")
-        return 0
-    else {
+    } else {
         return counter
     }
 }    
 
 function app(counter) {
-    while (update!==0) {
-        //const currentView = view(counter);
+    while (true) {
         console.clear();
+        const currentView = view(counter);
         var prompt = require('prompt-sync')({
+            history: require('prompt-sync-history')(),
             sigint: true
         });
-        var n = prompt(view(counter));
+        var n = prompt(currentView);
+        prompt.history.save();
+        if (n==="q")
+            return false
         counter = update(n,counter);
     }
 }
