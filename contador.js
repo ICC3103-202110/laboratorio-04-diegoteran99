@@ -1,5 +1,5 @@
 function view(counter) {
-    return "    Count: " + counter+"\n\n    (+) (-)"+"\n\n\n    (q) for quit"+"\n\nWhat would you do? "
+    return "    Count: " + counter+"\n\n    (+) (-)"+"\n\n\n    (q) for quit"+"\n"
 }
 
 function update(msg, counter) {
@@ -13,16 +13,16 @@ function update(msg, counter) {
     }
 }    
 
+var prompt = require('prompt-sync')({
+    sigint: true
+});
+
 function app(counter) {
     while (true) {
         console.clear();
         const currentView = view(counter);
-        var prompt = require('prompt-sync')({
-            history: require('prompt-sync-history')(),
-            sigint: true
-        });
-        var n = prompt(currentView);
-        prompt.history.save();
+        console.log(currentView);
+        var n = prompt("What would you do? ");
         if (n==="q")
             return false
         counter = update(n,counter);
